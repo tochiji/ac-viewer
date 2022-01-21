@@ -1,4 +1,4 @@
-use bat::{PagingMode, PrettyPrinter};
+use bat::{Input, PagingMode, PrettyPrinter};
 use requestty::Question;
 
 use crate::fetch::fetch_html;
@@ -54,33 +54,45 @@ impl Problem {
         let xml = fetch_html(&url).await?;
         let code = get_code(&xml)?;
 
+        let title = self.get_submission_title(index);
+        let input = Input::from_bytes(code.as_bytes()).name(title);
+
         PrettyPrinter::new()
-            .input_from_bytes(code.as_bytes())
-            .language("rust")
+            .input(input)
+            .language("Rust")
+            .true_color(false)
             .line_numbers(true)
+            .grid(true)
+            .header(true)
             .paging_mode(PagingMode::Always)
             .print()
             .unwrap();
-        // println!("{}", code);
 
         Ok(())
+    }
+
+    /// 下記のような文字列を出力する。
+    /// 004  Rust (1.42.0)  2020-08-08 01:16:05(JST)    514 Byte   33 ms magurofly
+    fn get_submission_title(&self, index: usize) -> String {
+        let list = &self.list;
+        let s = list.get(index).unwrap();
+
+        format!(
+            "{:03}  {}  {} {:>11} {:>7} {}",
+            index + 1,
+            s.get("lang").unwrap(),
+            s.get("time").unwrap().replace("+0900", "(JST)"),
+            s.get("source_length").unwrap(),
+            s.get("sec").unwrap(),
+            s.get("user_name").unwrap()
+        )
     }
     fn get_submission_list(&self) -> Vec<String> {
         let list = &self.list;
 
         list.iter()
             .enumerate()
-            .map(|(i, v)| {
-                format!(
-                    "{:03}  {}  {} {:>11} {:>7} {}",
-                    i + 1,
-                    v.get("lang").unwrap(),
-                    v.get("time").unwrap().replace("+0900", "(JST)"),
-                    v.get("source_length").unwrap(),
-                    v.get("sec").unwrap(),
-                    v.get("user_name").unwrap()
-                )
-            })
+            .map(|(i, _)| self.get_submission_title(i))
             .chain(vec![String::from("read more")])
             .collect()
     }
