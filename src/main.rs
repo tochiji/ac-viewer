@@ -4,7 +4,7 @@ use std::process;
 
 #[derive(Parser)]
 #[clap(
-    name = "rust_acsubs",
+    name = "ac_viewer",
     author = "tochiji",
     version = "v1.0.0",
     about = "AtCoder Rust Submissions Viewer"
