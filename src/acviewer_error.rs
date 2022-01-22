@@ -5,13 +5,15 @@ use std::{
 
 #[derive(Debug)]
 pub enum AcViewerError {
-    NotFoundError(&'static str),
+    NotFound(&'static str),
+    NoSubmission(&'static str),
 }
 
 impl Display for AcViewerError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            AcViewerError::NotFoundError(s) => write!(f, "Error: {}", s),
+            AcViewerError::NotFound(s) => write!(f, "Error: {}", s),
+            AcViewerError::NoSubmission(s) => write!(f, "Error: {}", s),
         }
     }
 }

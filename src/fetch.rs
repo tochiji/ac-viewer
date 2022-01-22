@@ -10,7 +10,7 @@ pub async fn fetch_html(url: &String) -> Result<String, Box<dyn std::error::Erro
     let mut res = client.get(uri).await?;
 
     if res.status() != 200 {
-        Err(AcViewerError::NotFoundError("No Problem Found"))?
+        Err(AcViewerError::NotFound("No Problem Found"))?
     };
 
     let mut str = String::from("");
