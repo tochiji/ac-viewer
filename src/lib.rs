@@ -5,10 +5,10 @@ mod problem;
 use crate::problem::Problem;
 
 pub async fn run(contest_id: String, problem_id: String) -> Result<(), Box<dyn std::error::Error>> {
-    let mut ploblem = Problem::new(contest_id, problem_id);
-    ploblem.get_next_list().await?;
+    let mut problem = Problem::new(contest_id, problem_id);
+    problem.get_next_list().await?;
 
     loop {
-        ploblem.submission_select().await?;
+        problem.submission_select().await?;
     }
 }
