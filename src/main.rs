@@ -5,8 +5,8 @@ use std::process;
 #[derive(Parser)]
 #[clap(
     name = "ac_viewer",
-    author = "tochiji",
-    version = "v1.0.0",
+    author = env!("CARGO_PKG_AUTHORS"),
+    version = env!("CARGO_PKG_VERSION"),
     about = "AtCoder Rust Submissions Viewer"
 )]
 struct AppArg {
