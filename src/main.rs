@@ -10,9 +10,9 @@ use std::process;
     about = "AtCoder Rust Submissions Viewer"
 )]
 struct AppArg {
-    #[clap(short = 'c', long = "contest_id")]
+    /// ex. abc150, arc001, ...
     contest_id: String,
-    #[clap(short = 'p', long = "probrem_id")]
+    /// ex. a, b, c, d, e, f, g, h ...
     problem_id: String,
 }
 
