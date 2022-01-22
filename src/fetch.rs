@@ -1,3 +1,4 @@
+use crate::acviewer_error::AcViewerError;
 use hyper::{body::HttpBody, Client};
 use hyper_tls::HttpsConnector;
 
@@ -7,6 +8,10 @@ pub async fn fetch_html(url: &String) -> Result<String, Box<dyn std::error::Erro
 
     let uri = url.parse().unwrap();
     let mut res = client.get(uri).await?;
+
+    if res.status() != 200 {
+        Err(AcViewerError::NotFoundError("No Problem Found"))?
+    };
 
     let mut str = String::from("");
     while let Some(chunk) = res.body_mut().data().await {

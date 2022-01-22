@@ -25,7 +25,10 @@ async fn main() {
     if let Err(e) = result {
         match e.to_string().as_str() {
             "CTRL+C" => process::exit(0),
-            _ => process::exit(1),
+            _ => {
+                println!("{}", e);
+                process::exit(1)
+            }
         };
     };
 }
