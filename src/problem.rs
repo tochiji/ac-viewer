@@ -73,13 +73,13 @@ impl Problem {
 
     /// 下記のような文字列を出力する。
     /// 004  Rust (1.42.0)  2020-08-08 01:16:05(JST)    514 Byte   33 ms magurofly
-    fn get_submission_title(&self, index: usize) -> String {
+    fn get_submission_title(&self, submission_index: usize) -> String {
         let list = &self.list;
-        let s = list.get(index).unwrap();
+        let s = list.get(submission_index).unwrap();
 
         format!(
             "{:03}  {}  {} {:>11} {:>7} {}",
-            index + 1,
+            submission_index + 1,
             s.get("lang").unwrap(),
             s.get("time").unwrap().replace("+0900", "(JST)"),
             s.get("source_length").unwrap(),
@@ -123,12 +123,55 @@ impl Problem {
 mod test {
     use super::*;
     #[tokio::test]
-    async fn it_works() {
+    async fn it_works_get_next_list() {
         let contest_id = String::from("abc200");
         let problem_id = String::from("d");
         let mut p = Problem::new(contest_id, problem_id);
         p.get_next_list().await.unwrap();
         assert_eq!(p.problem_name, Some(String::from("D - Happy Birthday! 2")));
         assert_eq!(p.list.len(), 20);
+        assert_eq!(p.list_page, 1);
+
+        p.get_next_list().await.unwrap();
+        assert_eq!(p.problem_name, Some(String::from("D - Happy Birthday! 2")));
+        assert_eq!(p.list.len(), 40);
+        assert_eq!(p.list_page, 2);
+    }
+
+    #[test]
+    fn it_works_get_submission_title() {
+        let mut sub = BTreeMap::new();
+
+        fn insert(sub: &mut BTreeMap<String, String>, key: &str, value: &str) {
+            sub.insert(key.to_string(), value.to_string());
+        }
+        insert(&mut sub, "lang", "Rust (1.42.0)");
+        insert(&mut sub, "memory", "3856 KB");
+        insert(&mut sub, "score", "400");
+        insert(&mut sub, "sec", "23 ms");
+        insert(&mut sub, "source_length", "369 Byte");
+        insert(&mut sub, "status", "AC");
+        insert(
+            &mut sub,
+            "submission_url",
+            "/contests/abc150/submissions/16928490",
+        );
+        insert(&mut sub, "time", "2020-09-21 11:39:50+0900");
+        insert(&mut sub, "title", "D - Semi Common Multiple");
+        insert(&mut sub, "user_name", "PerfectUser");
+
+        let p = Problem {
+            contest_id: String::from("abc000"),
+            problem_id: String::from("a"),
+            problem_name: None,
+            list_page: 0,
+            list: vec![sub],
+            select_index: 0,
+        };
+
+        assert_eq!(
+            p.get_submission_title(0),
+            "001  Rust (1.42.0)  2020-09-21 11:39:50(JST)    369 Byte   23 ms PerfectUser"
+        );
     }
 }
