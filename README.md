@@ -1,6 +1,9 @@
 # ac-viewer
 AtCoderに提出されたコードをTerminalから閲覧するコマンドラインツールです。
 
+https://user-images.githubusercontent.com/7910558/150673713-cf37731e-bacf-4c3c-9ae8-ba40a48eb000.mov
+
+
 ## インストール
 
 デスクトップなど、適当なディレクトリで下記を実行します。
