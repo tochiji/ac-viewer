@@ -19,7 +19,7 @@ $ cargo install --path ac-viewer
 
 ```console
 ...
-Installed package `ac_viewer v0.1.0 ....
+Installed package `ac_viewer v0.1.1 ....
 ```
 
 ## コマンドの実行
@@ -31,7 +31,7 @@ AtCoderのURLに対応したコンテストIDと問題IDを入力してくださ
 ```console
 $ ac_viewer abc150 d
 
-? Select a Submission › 
+? Select a Submission (Ctrl+c to exit) › 
 ❯ 001  Rust (1.42.0)  2020-09-21 11:39:50(JST)    369 Byte   23 ms cunitac
   002  Rust (1.42.0)  2021-01-30 00:32:39(JST)    490 Byte   20 ms EEDECA
   003  Rust (1.42.0)  2021-08-09 20:36:54(JST)    506 Byte   32 ms boiler
