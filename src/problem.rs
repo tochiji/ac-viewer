@@ -101,7 +101,7 @@ impl Problem {
 
         let select = Question::select("theme")
             .should_loop(false)
-            .message("Select a Submission")
+            .message("Select a Submission (Ctrl+c to exit)")
             .choices(list)
             .default(self.select_index)
             .build();
