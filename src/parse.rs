@@ -6,10 +6,10 @@ pub fn get_problem_name(list_xml: &str) -> Result<String, String> {
     let pattern_str = r#"<option selected>{{problem_name}}</option>"#;
 
     // Patternオブジェクトを作り、xmlから検索する
-    let pat = Pattern::new(&pattern_str)?;
-    let ms = pat.matches(&list_xml);
+    let pat = Pattern::new(pattern_str)?;
+    let ms = pat.matches(list_xml);
 
-    if ms.len() == 0 {
+    if ms.is_empty() {
         let err = "Can't parse the problem name".to_string();
         return Err(err);
     }
@@ -39,7 +39,7 @@ pub fn get_submission_list(list_xml: &str) -> Result<Vec<BTreeMap<String, String
     let pat = Pattern::new(pattern_str)?;
 
     // xmlからPatternを検索する
-    let ms = pat.matches(&list_xml);
+    let ms = pat.matches(list_xml);
 
     Ok(ms)
 }
@@ -47,7 +47,7 @@ pub fn get_submission_list(list_xml: &str) -> Result<Vec<BTreeMap<String, String
 pub fn get_code(xml: &str) -> Result<String, String> {
     let pattern_str = r#"<pre id="submission-code">{{code}}</pre>"#;
     let pat = Pattern::new(pattern_str)?;
-    let code = pat.matches(&xml)[0].get("code").unwrap().to_string();
+    let code = pat.matches(xml)[0].get("code").unwrap().to_string();
 
     Ok(code)
 }

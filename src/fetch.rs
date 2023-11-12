@@ -2,7 +2,7 @@ use crate::acviewer_error::AcViewerError;
 use hyper::{body::HttpBody, Client};
 use hyper_tls::HttpsConnector;
 
-pub async fn fetch_html(url: &String) -> Result<String, Box<dyn std::error::Error>> {
+pub async fn fetch_html(url: &str) -> Result<String, Box<dyn std::error::Error>> {
     let https = HttpsConnector::new();
     let client = Client::builder().build::<_, hyper::Body>(https);
 
